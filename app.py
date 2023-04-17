@@ -28,10 +28,10 @@ app = Flask(__name__)
   
 app.secret_key = 'xyzsdfg'
   
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'db_bhcms_final'
+app.config['MYSQL_HOST'] = 'us-cdbr-east-06.cleardb.net'
+app.config['MYSQL_USER'] = 'bf7577b3f3a6df'
+app.config['MYSQL_PASSWORD'] = 'e8d7e398'
+app.config['MYSQL_DB'] = 'heroku_595c13ac8015330'
   
 mysql = MySQL(app)
 
@@ -1457,10 +1457,10 @@ def total_prenatal():
 @app.route('/graph')
 def graph():
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="bhcms"
+        host="us-cdbr-east-06.cleardb.net",
+        user="bf7577b3f3a6df",
+        password="e8d7e398",
+        database="heroku_595c13ac8015330"
     )
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM data")
@@ -1546,10 +1546,10 @@ def update_user():
 @app.route('/users')
 def users():
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="bhcms_db"
+        host="us-cdbr-east-06.cleardb.net",
+        user="bf7577b3f3a6df",
+        password="e8d7e398",
+        database="heroku_595c13ac8015330"
     )
     # Create MySQL cursor
     cursor = conn.cursor()
