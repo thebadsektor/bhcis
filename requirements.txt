@@ -42,7 +42,7 @@ packaging==21.3
 pandas==1.5.3
 pipenv==2022.5.2
 platformdirs==2.5.2
-protobuf==4.22.1
+protobuf>=3.11.0,<=4.22.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
