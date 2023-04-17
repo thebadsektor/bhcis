@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Barangay Health Center Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+<style>
+    body {
+      background-color: #a4e4bc;
+   }
+   .nav-link.active {
+    background-color: #97e3ed;
+    color: #86f0ef;
+  }
+  
+  .nav-link:hover {
+    background-color: #97e3ed;
+  }
+     .card-body{
+    width: 100%;
+} 
+.btn-warning, .btn-danger, .btn-success,.btn-info,.btn-secondary {
+    margin-right: 10px;
+    color:white;
+    margin-top: 10px;
+  }
+.unbold {
+    font-weight: normal;
+  }
+input[type="radio"] {
+  font-weight: normal;
+}
+label[for="radio-1"], label[for="radio-2"] {
+    font-weight: normal;
+  }
+
+               
+</style>
+
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-info">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="/home">Admin Side</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{{ url_for('Index') }}">
+      <div class="input-group">
+          <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+          <button class="btn btn-primary" name="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
+      </div>
+  </form>
+  
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <div class="container">
+            <div class="row">	
+                 <strong>{{session.name}} | <a href="{{ url_for('logout') }}" > Logout  </a> 
+            </strong>
+            </div>
+            </div>
+        </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<div id="layoutSidenav">
+
+  <div id="layoutSidenav_nav">
+
+      <nav class="sb-sidenav accordion sb-sidenav-light " id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+              <div class="nav">
+                <div class="sb-sidenav-menu-heading">Home</div>
+                    <a class="nav-link " href="/dashboard">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-tachometer" style="font-size: 24px;"></i>
+                      </div>
+                      Dashboard
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Records</div>
+                    <a class="nav-link " href="/manage">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-user" style="font-size: 24px;"></i>
+                      </div>
+                      Manage User
+                    </a>
+                  <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav">
+                          <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                          <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                      </nav>
+                  </div>
+                  
+                  <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                              Authentication
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                              <nav class="sb-sidenav-menu-nested nav">
+                                  <a class="nav-link" href="login.html">Login</a>
+                                  <a class="nav-link" href="register.html">Register</a>
+                                  <a class="nav-link" href="password.html">Forgot Password</a>
+                              </nav>
+                          </div>
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                              Error
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          
+                      </nav>
+                  </div>
+                  
+          </div>
+      </nav>
+      
+  </div>
+
+  <div id="layoutSidenav_content">
+    <main>
+     
+        <div class="container-fluid px-4">
+      
+            <h4 class="mt-4">Users</h4>
+            <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">User's Record</li>
+        </ol>
+        
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-12 my-auto">
+            {%with messages = get_flashed_messages()%}
+            {%if messages%}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close float-end" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            {%endwith%}
+            
+            <div class="card">
+              <div class="card-header">
+                  <h4>User's Record
+                      <button class="btn btn-primary float-end" data-toggle="modal" data-target="#myModal">Add User</button></h2>
+                  </h4>
+              </div>
+
+              <!-- Enter New Patient Modal -->
+              <div id="myModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+  
+                          <div class="modal-header">
+                              <h5 class="modal-title text-primary" style="align-content: center;">Please Add New User</h5>    
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+           
+
+              <div class="modal-body">
+                  
+                  <form action="{{ url_for('add_user')}}" method="POST">
+                      <div class="form-group">
+                        <label>name</label>
+                        <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Enter Name">
+                      </div> <br>
+                          <div class="form-group">
+                              <label>Email</label>
+                              <input type="text" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Enter Email">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Password</label>
+                              <input type="password" name="password" class="form-control" id="exampleFormControlInput1" placeholder="Enter Middlename">
+                            </div> <br>
+                            <div class="form-group">
+                              <b> <label for="user_type">User Type</label> </b> 
+                              <select class="form-control" id="user_type" name="user_type">
+                                <option value="" selected disabled>User type</option>
+                                <option value="admin">Admin</option>
+                                <option value="encoder">Encoder</option>
+                              </select> <br> <br>  
+                            </div> 
+                                <button type="add_user" class="btn btn-primary mb-2 float-end">Add</button>
+                   
+                    </form>
+
+
+              </div>
+          </div>
+      </div>
+
+  </div>
+  
+
+  <div class="card-body" style="overflow-x:auto;">
+    <!-- End of Enter New Patient Modal -->
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">User's ID</th>
+          <th scope="col"class="text-center">Name</th>
+          <th scope="col"class="text-center">Email</th>
+          <th scope="col"class="text-center">Password</th>
+          <th scope="col"class="text-center">User Type</th>
+          <th scope="col"class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if message %}
+        <tr>
+          <td colspan="12" class="text-center">{{ message }}</td>
+        </tr>
+        {% else %}
+          {% for row in user %}
+          <tr>
+            
+            <td class="text-center">{{ row.0 }}</td>
+            <td class="text-center">{{ row.1 }}</td>
+            <td class="text-center">{{ row.2 }}</td>
+            <td class="text-center">{{ row.3 }}</td>
+            <td class="text-center">{{ row.4 }}</td>
+  
+      <td>
+        <div style="display: flex; gap: 5px;">
+          <a href="/update/{{row.0}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
+          <a href="/delete_user/{{ row.0 }}" onclick="return confirm('Are You Sure You Want To Delete this Record?')" class="btn btn-danger btn-sm">Delete</a>
+      
+
+        </div>
+      </td>
+  </tr>
+
+      <!-- Enter Edit Patient Modal -->
+
+      <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+              <div class="modal-content">
+     
+                  <div class="modal-header">
+                      <h5 class="modal-title text-primary" style="align-content: center;">Update User Details</h5>    
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    
+  
+                  <div class="modal-body">
+                      
+                    <form action="{{ url_for('update_user')}}" method="POST">
+                      <input type="hidden" name="userid" value="{{row.0}}">
+                      <div class="form-group">
+                        <label>name</label>
+                        <input value="{{row.1}}" type="text"  name="name" class="form-control" id="exampleFormControlInput1" placeholder="Enter Name">
+                      </div> <br>
+                          <div class="form-group">
+                              <label>Email</label>
+                              <input value="{{row.2}}" type="text" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Enter Email">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Password</label>
+                              <input value="{{row.3}}" type="password" name="password" class="form-control" id="exampleFormControlInput1" placeholder="Enter Middlename">
+                            </div> <br>
+                            <div class="form-group">
+                              <b> <label for="user_type">User Type</label> </b> 
+                              <select value="{{row.4}}" class="form-control" id="user_type" name="user_type">
+                                <option value="" selected disabled>User type</option>
+                                <option value="admin">Admin</option>
+                                <option value="encoder">Encoder</option>
+                              </select> <br> <br>  
+                            </div> 
+                            <button type="submit" class="btn btn-primary mb-2 float-end">Update</button>
+                   
+                    </form>
+  
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  
+  
+<!-- End of Edit Patient Modal -->
+
+
+
+      {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+          <!-- Content ends here-->
+
+
+          <div class="col-sm-2"></div>
+
+      </div>
+  </div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+
+
+<script>
+const navLinks = document.querySelectorAll('.nav-link');
+for (let i = 0; i < navLinks.length; i++) {
+navLinks[i].addEventListener('click', function() {
+for (let j = 0; j < navLinks.length; j++) {
+navLinks[j].classList.remove('active');
+}
+this.classList.add('active');
+});
+}
+</script>
+
+
+<script>
+  function calculateAge() {
+    var birthday = new Date(document.getElementsByName("birthday")[0].value);
+    var today = new Date();
+    var age = today.getFullYear() - birthday.getFullYear();
+    if (today.getMonth() < birthday.getMonth() || (today.getMonth() == birthday.getMonth() && today.getDate() < birthday.getDate())) {
+      age--;
+    }
+    document.getElementsByName("age")[0].value = age;
+  }
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="static/js/datatables-simple-demo.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+
+</body>
+</html> 

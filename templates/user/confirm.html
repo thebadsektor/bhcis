@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Confirm Archive</title>
+  </head>
+  <body>
+    <h1>Confirm Archive</h1>
+    <p>Are you sure that {{ record[1] }} has completed their {{ record[2] }} immunization?</p>
+    <form action="/archive" method="post">
+      <input type="hidden" name="id" value="{{ record[0] }}">
+      <input type="submit" name="confirm" value="yes">
+      <input type="submit" name="confirm" value="no">
+    </form>
+  </body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Barangay Health Center Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+<style>
+    body {
+      background-color: #a4e4bc;
+   }
+   .nav-link.active {
+    background-color: #97e3ed;
+    color: #86f0ef;
+  }
+  
+  .nav-link:hover {
+    background-color: #97e3ed;
+  }
+     .card-body{
+    width: 100%;
+} 
+.btn-warning, .btn-danger, .btn-success,.btn-info,.btn-secondary {
+    margin-right: 10px;
+    color:white;
+    margin-top: 10px;
+  }
+.unbold {
+    font-weight: normal;
+  }
+input[type="radio"] {
+  font-weight: normal;
+}
+label[for="radio-1"], label[for="radio-2"] {
+    font-weight: normal;
+  }
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+               
+</style>
+
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-info">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="/home">User Side</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{{ url_for('Family') }}">
+      <div class="input-group">
+          <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+          <button class="btn btn-primary" name="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
+      </div>
+  </form>
+  
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <div class="container">
+            <div class="row">	
+                 <strong>{{session.name}} | <a href="{{ url_for('logout') }}" > Logout  </a> 
+            </strong>
+            </div>
+            </div>
+        </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<div id="layoutSidenav">
+
+  <div id="layoutSidenav_nav">
+
+      <nav class="sb-sidenav accordion sb-sidenav-light " id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+              <div class="nav">
+                <div class="sb-sidenav-menu-heading">Home</div>
+                    <a class="nav-link " href="/home">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-home" style="font-size: 24px;"></i>
+                      </div>
+                      Home
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Records</div>
+                    <a class="nav-link active" href="/Family">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-book-medical" style="font-size: 24px;"></i>
+                      </div>
+                      Family Record
+                    </a>
+                   
+                    <a class="nav-link"  href="/Consultation">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-file-prescription" style="font-size: 24px;"></i>
+                      </div>
+                      Consultation Record
+                    </a>
+                    <a class="nav-link" href="Prenatal">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-female" style="font-size: 24px;"></i>
+                      </div>
+                      Prenatal Record
+                    </a>
+                    <a class="nav-link" href="/Newborn">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-baby" style="font-size: 24px;"></i>
+                      </div>
+                      Newborn Record
+                    </a>
+                   
+                    <a class="nav-link" href="/Prediction">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-heartbeat " style="font-size: 24px;"></i>
+                      </div>
+                      ISD Prediction Record
+                    </a>
+                 
+                  <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav">
+                          <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                          <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                      </nav>
+                  </div>
+                  
+                  <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                              Authentication
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                              <nav class="sb-sidenav-menu-nested nav">
+                                  <a class="nav-link" href="login.html">Login</a>
+                                  <a class="nav-link" href="register.html">Register</a>
+                                  <a class="nav-link" href="password.html">Forgot Password</a>
+                              </nav>
+                          </div>
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                              Error
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          
+                      </nav>
+                  </div>
+                  
+          </div>
+      </nav>
+      
+  </div>
+
+  <div id="layoutSidenav_content">
+    <main>
+     
+        <div class="container-fluid px-4">
+      
+            <h4 class="mt-4">Family</h4>
+            <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Family Record</li>
+        </ol>
+        
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-12 my-auto">
+            {%with messages = get_flashed_messages()%}
+            {%if messages%}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close float-end" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            {%endwith%}
+            
+            <div class="card">
+              <div class="card-header">
+                  <h4>Family Record
+                      <button class="btn btn-primary float-end" data-toggle="modal" data-target="#myModalFamily">Add Family</button></h2>
+                  </h4>
+              </div>
+
+      <!-- Enter New Patient Modal -->
+<div id="myModalFamily" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" style="align-content: center;">New Family</h5>    
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('insert_family')}}" method="POST">
+          <div class="form-group">
+            <label>Family Name</label>
+            <input type="text" name="family_name" class="form-control" id="exampleFormControlInput1" placeholder="Enter Family Name" pattern="[A-Za-z ]+"required>
+          </div> <br>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" name="address" class="form-control" id="exampleFormControlInput1" placeholder="Enter Complete Address" required>
+          </div> <br> 
+          <div class="form-group">
+            <label>Contact Number </label>
+            <input type="text" name="contact_no" class="form-control" id="exampleFormControlInput1" pattern="[0-9]{11}" placeholder="Enter Contact Number" required>
+          </div> <br>
+          <button type="submit" class="btn btn-primary mb-2 float-end">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Enter New Patient Modal -->
+
+
+<div class="card-body" style="overflow-x:auto;">
+ 
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+       
+        <th scope="col"class="text-center">Family Name</th>
+        <th scope="col"class="text-center">Address</th>
+        <th scope="col"class="text-center">Contact Number</th>
+        <th scope="col"class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if message %}
+        <tr>
+          <td colspan="12" class="text-center">{{ message }}</td>
+        </tr>
+        {% else %}
+          {% for row in family_record %}
+          <tr>
+         
+          
+          <td class="text-center"> {{ row.1 }}</td>
+          <td class="text-center">{{ row.2 }}</td>
+          <td class="text-center">{{ row.3 }}</td>
+          
+    <td style="width: 29%;">
+    
+      <div style="display: flex; gap: 5px;">
+        <a href="/insert_view_members/{{row.0}}" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myMember{{row.0}}">New Member</a>
+        <a href="/update_family/{{row.0}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modaledit_family{{row.0}}">Edit</a>
+        <a href="/delete_family/{{ row.0 }}" onclick="return confirm('Are You Sure You Want To Delete this Record?')" class="btn btn-danger btn-sm">Delete</a>
+        <a href="/view_members/{{row.0}}" class="btn btn-secondary btn-sm">View </a>
+      </div>
+    </td>
+</tr>
+
+
+<!-- Enter New Family Member Modal -->
+  
+<div id="myMember{{row.0}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content-1">
+
+          <div class="modal-header">
+              <h5 class="modal-title text-primary" style="align-content: center;">New Family Member</h5>    
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+
+            <div class="modal-body">
+  
+              <form action="{{ url_for('insert_view_members')}}" method="POST" >
+                <div class="personal-info">
+                <div class="section-title">Personal Information</div>
+
+                <input type="hidden" name="family_id" value="{{row.0}}">
+            
+                <div class="form-group row">
+                  <label>Patient's Name</label>
+                  <div class="col-md-4">
+
+                    <input type="text" name="lastname" class="form-control" id="lastname" placeholder=" Lastname" pattern="[A-Za-z ]+"required>
+                  </div>
+                  <div class="col-md-3">
+                    
+                    <input type="text" name="firstname" class="form-control" id="firstname" placeholder=" Firstname"pattern="[A-Za-z ]+"required>
+                  </div>
+                  <div class="col-md-3">
+                   
+                    <input type="text" name="middlename" class="form-control" id="middlename" placeholder=" Middlename "pattern="[A-Za-z ]+" required>
+                  </div>
+                  <div class="col-md-2">
+                    
+                    <input type="text" name="suffix" class="form-control" id="suffix" placeholder="Suffix" style="width:70px;">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <br> <label for="address">Address</label>
+                    <input type="text" name="address" class="form-control" id="address" placeholder="Enter Complete Address"required>
+                  </div>
+                </div>
+                
+               
+                  <div class="col-md-12 form-group">
+                  <br>  <label> Birthdate</label>
+                     <input type="date" name="birthday" class="form-control" placeholder="Enter Birthday" onchange="calculateAge()"required> 
+                  </div>
+
+                  <div class="col-md-4 form-group">
+                   <br> <label>Sex</label> <br>
+                     <input type="radio" id="radio-1" name="sex" value="Male"> 
+                    <label for="radio-1" >Male</label> <br>
+                    <input type="radio" id="radio-2" name="sex" value="Female">
+                    <label for="radio-2">Female</label> <br>
+                  </div>
+                  <div class="col-md-12 form-group">
+                  <br>  <label>Contact Number </label>
+                    <input type="text" name="contact_no" class="form-control" placeholder="Enter Contact Number" pattern="[0-9]{11}"required>
+                  </div> <br>
+                  </div>
+                  <div class="personal-info">
+                  <div class="section-title">Medical Information</div>
+                  <div class="form-group row">
+                  <div class="col-md-4">
+                    <label>Review of Systems</label>
+                   
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="systems" value="Fever" id="fever">
+                        <label class="form-check-label" for="fever">Fever</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="systems" value="Cough/Colds" id="cough/colds">
+                      <label class="form-check-label" for="cough/colds">Cough/Colds</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="systems" value="Abdominal Pain" id="abdominal pain">
+                    <label class="form-check-label" for="abdominal pain">Abdominal Pain</label>
+                   </div>
+                   <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="systems" value="Diarrhea" id="diarrhea">
+                    <label class="form-check-label" for="diarrhea">Diarrhea</label>
+                   </div>
+                   <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="systems" value="Constipation" id="constipation">
+                    <label class="form-check-label" for="constipation">Constipation</label>
+                   </div>
+                   <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="systems" value="Pain on Urination" id="pain on urination">
+                    <label class="form-check-label" for="pain on urination">Pain on Urination</label>
+                   </div>
+                   
+                   <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="systems" value="None" id="none">
+                    <label class="form-check-label" for="none">None</label>
+                   </div>
+                  
+                    </div>
+                    <div class="col-md-4">
+                      <label>Past Medical History</label>
+                     
+                      <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="past_medical" value="Diabetes Mellitus" id="diabetes mellitus">
+                          <label class="form-check-label" for="diabetes mellitus">Diabetes Mellitus</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="past_medical" value="Hypertension" id="hypertension">
+                        <label class="form-check-label" for="hypertension">Hypertension</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="Asthma" id="asthma">
+                      <label class="form-check-label" for="asthma">Asthma</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="Heart Disease" id="heart disease">
+                      <label class="form-check-label" for="heart disease">Heart Disease</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="Liver Disease" id="liver disease">
+                      <label class="form-check-label" for="liver disease">Liver Disease</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="Kidney Disease" id="kidney disease">
+                      <label class="form-check-label" for="kidney disease">Kidney Disease</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="Allergy" id="allergy">
+                      <label class="form-check-label" for="allergy">Allergy</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="PTB" id="ptb">
+                      <label class="form-check-label" for="ptb">PTB</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="Cancer" id="cancer">
+                      <label class="form-check-label" for="cancer">Cancer</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="History of Surgery" id="history surgery">
+                      <label class="form-check-label" for="history surgery">History of Surgery</label>
+                    </div>
+                    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="past_medical" value="None" id="None">
+                      <label class="form-check-label" for="none">None</label>
+                    </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label>Family Medical History</label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" name="family_medical" value="Diabetes Mellitus" id="diabetes mellitus">
+                          <label class="form-check-label" for="diabetes mellitus">Diabetes Mellitus</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="family_medical" value="Hypertension" id="hypertension">
+                        <label class="form-check-label" for="hypertension">Hypertension</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="Asthma" id="asthma">
+                      <label class="form-check-label" for="asthma">Asthma</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="Heart Disease" id="heart disease">
+                      <label class="form-check-label" for="heart disease">Heart Disease</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="Liver Disease" id="liver disease">
+                      <label class="form-check-label" for="liver disease">Liver Disease</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="Kidney Disease" id="kidney disease">
+                      <label class="form-check-label" for="kidney disease">Kidney Disease</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="Allergy" id="allergy">
+                      <label class="form-check-label" for="allergy">Allergy</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="PTB" id="ptb">
+                      <label class="form-check-label" for="ptb">PTB</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="Cancer" id="cancer">
+                      <label class="form-check-label" for="cancer">Cancer</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="History of Surgery" id="history surgery">
+                      <label class="form-check-label" for="history surgery">History of Surgery</label>
+                    </div>
+                
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="family_medical" value="None" id="None">
+                      <label class="form-check-label" for="none">None</label>
+                    </div>
+                        
+                        </div>
+                    </div>
+                  </div> 
+
+              
+                      <button type="submit" class="btn btn-info mb-2 float-end">Save</button>
+             
+              </form>
+            
+            
+</div>
+</div>
+</div>
+</div>
+  <!-- End of Enter Consultation Modal -->  
+
+
+      <!-- Enter Edit Family Modal -->
+
+      <div id="modaledit_family{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+              <div class="modal-content">
+     
+                  <div class="modal-header">
+                      <h5 class="modal-title text-primary" style="align-content: center;">Update Family Details</h5>    
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    
+  
+                  <div class="modal-body">
+                      
+                      <form action="{{ url_for('update_family')}}" method="POST">
+                              <input type="hidden" name="family_id" value="{{row.0}}">
+                              <div class="form-group">
+                                <label>Family Name</label>
+                                <input value="{{row.1}}" type="text" name="family_name" class="form-control" id="exampleFormControlInput1" placeholder="Enter Lastname">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Address</label>
+                                <input value="{{row.2}}" type="text" name="address" class="form-control" id="exampleFormControlInput1" placeholder="Enter Address">
+                              </div> <br>
+                              
+                              <div class="form-group">
+                                <label>Contact Number</label>
+                                <input value="{{row.3}}" type="text" name="contact_no" class="form-control" id="exampleFormControlInput1" placeholder="Enter Contact number">
+                              </div> <br>
+
+                                  <div class="form-group"> <button type="submit" class="btn btn-success float-end mb-2">Update</button>
+                     
+                      </form>
+  
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  
+  
+<!-- End of Edit Family Modal -->
+
+      {% endfor %}
+      {% endif %}
+      </tbody>
+    </table>
+      <div class="pagination justify-content-center">
+        {{ pagination.links }}
+      </div>
+    
+    </div>
+      
+    <!-- Content ends here-->
+
+
+    <div class="col-sm-2"></div>
+
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+<script>
+const navLinks = document.querySelectorAll('.nav-link');
+for (let i = 0; i < navLinks.length; i++) {
+navLinks[i].addEventListener('click', function() {
+for (let j = 0; j < navLinks.length; j++) {
+navLinks[j].classList.remove('active');
+}
+this.classList.add('active');
+});
+}
+</script>
+
+
+<script>
+  function calculateAge() {
+    var birthday = new Date(document.getElementsByName("birthday")[0].value);
+    var today = new Date();
+    var age = today.getFullYear() - birthday.getFullYear();
+    if (today.getMonth() < birthday.getMonth() || (today.getMonth() == birthday.getMonth() && today.getDate() < birthday.getDate())) {
+      age--;
+    }
+    document.getElementsByName("age")[0].value = age;
+  }
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="static/js/datatables-simple-demo.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Barangay Health Center Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+<style>
+    body {
+    background-color: #d5fbeb;
+   }
+   .nav-link.active {
+    background-color: #97e3ed;
+    color: #86f0ef;
+  }
+  
+  .nav-link:hover {
+    background-color: #97e3ed;
+  }
+    
+</style>
+
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-info">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3">Admin Side</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+   
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <div class="container">
+            <div class="row">	
+                 <strong>{{session.name}} | <a href="{{ url_for('logout') }}" > Logout  </a> 
+            </strong>
+            </div>
+            </div>
+        </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+<div id="layoutSidenav">
+
+    <div id="layoutSidenav_nav">
+  
+        <nav class="sb-sidenav accordion sb-sidenav-light " id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                  <div class="sb-sidenav-menu-heading">Home</div>
+                      <a class="nav-link  " href="/dashboard">
+                        <div class="sb-nav-link-icon">
+                          <i class="fas fa-tachometer" style="font-size: 24px;"></i>
+                        </div>
+                        Dashboard
+                      </a>
+                    <div class="sb-sidenav-menu-heading">Records</div>
+                    <a class="nav-link " href="/manage">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-user" style="font-size: 24px;"></i>
+                      </div>
+                      Manage User
+                    </a>
+                </div>
+            </nav>
+            
+        </div>
+
+        <div id="layoutSidenav_content">
+                <main>
+        
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Total</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header bg-primary text-white">
+                        Total number of patients
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_patients }}</h5>
+                        <a href="{{ url_for('total_patients') }}" class="btn btn-primary">View details</a>
+                    </div> 
+                </div>
+            </div>
+    
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header bg-warning text-white">
+                        Total number of newborn
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_newborn }}</h5>
+                        <a href="{{ url_for('total_newborn') }}" class="btn btn-warning">View details</a>
+                    </div> 
+                </div>
+            </div>
+    
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header bg-success text-white">
+                        Total number of immunization
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_immunization }}</h5>
+                        <a href="{{ url_for('total_immunization') }}" class="btn btn-success">View details</a>
+                    </div> 
+                </div>
+            </div>
+    
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header bg-danger text-white">
+                        Total number of Prediction
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_prediction }}</h5>
+                        <a href="{{ url_for('total_prediction') }}" class="btn btn-danger">View details</a>
+                    </div> 
+                </div>
+            </div>
+    
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header bg-info text-white">
+                        Total number of Prenatal
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_prenatal }}</h5>
+                        <a href="{{ url_for('total_prenatal') }}" class="btn btn-info">View details</a>
+                    </div> 
+                </div>
+            </div>
+
+
+            
+            
+
+        </div>
+    </div> <br>
+    
+  
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="static/js/datatables-simple-demo.js"></script>
+
+</body>
+</html>

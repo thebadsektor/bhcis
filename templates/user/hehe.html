@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Barangay Health Center Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+<style>
+    body {
+      background-color: #d5fbeb;
+   }
+   .nav-link.active {
+    background-color: #97e3ed;
+    color: #86f0ef;
+  }
+  
+  .nav-link:hover {
+    background-color: #97e3ed;
+  }
+     .card-body{
+    width: 100%;
+} 
+.btn-warning, .btn-danger, .btn-success,.btn-info {
+    margin-right: 10px;
+    color:black;
+    margin-top: 10px;
+  }
+.unbold {
+    font-weight: normal;
+  }
+
+               
+</style>
+
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-info">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="index.html">User Side</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+            <button class="btn btn-primary" name="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <div class="container">
+            <div class="row">	
+                 <strong>{{session.name}} | <a href="{{ url_for('logout') }}" > Logout  </a> 
+            </strong>
+            </div>
+            </div>
+        </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+
+  <div id="layoutSidenav_nav">
+
+      <nav class="sb-sidenav accordion sb-sidenav-light " id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+              <div class="nav">
+                  <div class="sb-sidenav-menu-heading">Home</div>
+                  <a class="nav-link" href="/index">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                      </div>
+                      Dashboard
+                    </a>
+                  <div class="sb-sidenav-menu-heading">Records</div>
+                  <a class="nav-link" href="/patients_record">
+                      <div class="sb-nav-link-icon"><i class="fas fa-solid fa-book-medical"></i></div>
+                      Patients Record
+                  </a>
+                  <a class="nav-link" href="consultation_record.php">
+                    <div class="sb-nav-link-icon"><i class="fas fa-file-prescription"></i></div>
+                    Consultation Record
+                </a>
+                  <a class="nav-link" href="prenatal_record.php">
+                      <div class="sb-nav-link-icon"><i class="fas fa-female"></i></div>
+                      Prenatal Record
+                  </a>
+                  <a class="nav-link" href="newborn_record.php">
+                      <div class="sb-nav-link-icon"><i class="fas fa-baby"></i></div>
+                      Newborn Record
+                  </a>
+                  <a class="nav-link" href="immunization_record.php">
+                      <div class="sb-nav-link-icon"><i class="fas fa-solid fa-syringe"></i></div>
+                      Immunization Record
+                  </a>
+                 
+                  <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav">
+                          <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                          <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                      </nav>
+                  </div>
+                  
+                  <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                              Authentication
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                              <nav class="sb-sidenav-menu-nested nav">
+                                  <a class="nav-link" href="login.html">Login</a>
+                                  <a class="nav-link" href="register.html">Register</a>
+                                  <a class="nav-link" href="password.html">Forgot Password</a>
+                              </nav>
+                          </div>
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                              Error
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          
+                      </nav>
+                  </div>
+                  
+          </div>
+      </nav>
+      
+  </div>
+
+  <div id="layoutSidenav_content">
+    <main>
+
+        <div class="container-fluid px-4">
+            <h4 class="mt-4">Users</h4>
+            <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Patients Record</li>
+        </ol>
+           
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-12 my-auto">
+                
+            {%with messages = get_flashed_messages()%}
+            {%if messages%}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close float-end" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            {%endwith%}
+            
+            <div class="card">
+              <div class="card-header">
+                  <h4>Patient Record
+                      <button class="btn btn-primary float-end" data-toggle="modal" data-target="#myModal">Add Patient</button></h2>
+                  </h4>
+              </div>
+         
+  
+              
+              <!-- Enter New Student Modal -->
+              <div id="myModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+  
+                          <div class="modal-header">
+                              <h5 class="modal-title text-primary" style="align-content: center;">Please Add New Patient</h5>    
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+           
+
+              <div class="modal-body">
+                  
+                  <form action="{{ url_for('insert')}}" method="POST">
+                      <div class="form-group">
+                        <label>Lastname</label>
+                        <input type="text" name="lastname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Lastname">
+                      </div> <br>
+                          <div class="form-group">
+                              <label>Firstname</label>
+                              <input type="text" name="firstname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Firstname">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Middlename</label>
+                              <input type="text" name="middlename" class="form-control" id="exampleFormControlInput1" placeholder="Enter Middlename">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Suffix</label>
+                              <input type="text" name="suffix" class="form-control" id="exampleFormControlInput1" placeholder="Enter Suffix if available, n/a if not">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Address</label>
+                              <input type="text" name="address" class="form-control" id="exampleFormControlInput1" placeholder="Enter Complete Address">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Birthdate</label>
+                              <input type="date" name="birthday" class="form-control" id="exampleFormControlInput1" placeholder="Enter Birthday">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Age</label>
+                              <input type="int" name="age" class="form-control" id="exampleFormControlInput1" placeholder="Enter Age">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Sex</label> <br>
+                               <input type="radio" id="radio-1" name="gender" value="Male"> 
+                              <label for="radio-1" class="unbold">Male</label> <br>
+                              <input type="radio" id="radio-2" name="gender" value="Female">
+                              <label for="radio-2" class="unbold">Female</label> <br> 
+                              </div> <br>
+                              <div class="form-group">
+                                  <label>Contact Number </label>
+                                  <input type="text" name="contact_no" class="form-control" id="exampleFormControlInput1" placeholder="Enter Contact Number">
+                              </div> <br>
+                              <div class="form-group">
+                                  <label>Email</label>
+                                  <input name="email" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Email">
+                                </div> <br>
+
+                                <button type="submit" class="btn btn-primary mb-2 float-end">Save</button>
+                   
+                    </form>
+
+
+              </div>
+          </div>
+      </div>
+
+  </div>
+
+
+  <!-- End of Enter New Student Modal -->
+
+<br> <br><table class="table table-bordered table-hover ">
+  <thead>
+      <tr>
+          <th scope="col" class="text-center" >Patient's ID</th>
+          <th scope="col"class="text-center">Lastname</th>
+          <th scope="col"class="text-center">Firstname</th>
+          <th scope="col"class="text-center">Middlename</th>
+          <th scope="col"class="text-center">Suffix</th>
+          <th scope="col"class="text-center">Address</th>
+          <th scope="col"class="text-center">Birthday</th>
+          <th scope="col"class="text-center">Age</th>
+          <th scope="col"class="text-center">Sex</th>
+          <th scope="col"class="text-center">Contact Number</th>
+          <th scope="col"class="text-center">Email</th>
+          <th scope="col"class="text-center">Actions</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for row in patients_record %}
+      <tr>
+      <td class="text-center">{{row.0}}</td>
+      <td class="text-center">{{row.1}}</td>
+      <td class="text-center">{{row.2}}</td>
+      <td class="text-center">{{row.3}}</td>
+      <td class="text-center">{{row.4}}</td>
+      <td class="text-center">{{row.5}}</td>
+      <td class="text-center">{{row.6}}</td>
+      <td class="text-center">{{row.7}}</td>
+      <td class="text-center">{{row.8}}</td>
+      <td class="text-center">{{row.9}}</td>
+      <td class="text-center">{{row.10}}</td>
+      <td>
+        <a href="/update/{{row.0}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.0}}">
+          <i class="fas fa-edit"></i>
+        </a>
+          <a href="/delete/{{ row.0 }}" onclick="return confirm('Are Sure Want To Deleted ?')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+          <a href="/update/{{row.0}}" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modaledit{{row.0}}">
+            <i class="fas fa-edit"></i>
+          </a>
+            <a href="/delete/{{ row.0 }}" onclick="return confirm('Are Sure Want To Deleted ?')" class="btn btn-primary btn-sm"><i class="fas fa-trash"></i></a>
+      </td>
+  </tr>
+
+
+      <!-- Enter New Student Modal -->
+      <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+              <div class="modal-content">
+     
+                  <div class="modal-header">
+                      <h5 class="modal-title text-primary" style="align-content: center;">Update Patient Details</h5>    
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    
+  
+                  <div class="modal-body">
+                      
+                      <form action="{{ url_for('update')}}" method="POST">
+                          <input type="hidden" name="id" value="{{row.0}}">
+                          <label>Lastname</label>
+                        <input type="text" name="lastname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Lastname">
+                      </div>
+                      <div class="form-group">
+                          <label>Firstname</label>
+                          <input type="text" name="firstname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Firstname">
+                        </div>
+                        <div class="form-group">
+                          <label>Middlename</label>
+                          <input type="text" name="middlename" class="form-control" id="exampleFormControlInput1" placeholder="Enter Middlename">
+                        </div>
+                        <div class="form-group">
+                          <label>Suffix</label>
+                          <input type="text" name="suffix" class="form-control" id="exampleFormControlInput1" placeholder="Enter Suffix if available, n/a if not">
+                        </div>
+                        <div class="form-group">
+                          <label>Address</label>
+                          <input type="text" name="address" class="form-control" id="exampleFormControlInput1" placeholder="Enter Complete Address">
+                        </div>
+                        <div class="form-group">
+                          <label>Lastname</label>
+                          <input type="date" name="birthday" class="form-control" id="exampleFormControlInput1" placeholder="Enter Birthday">
+                        </div>
+                        <div class="form-group">
+                          <label>Age</label>
+                          <input type="int" name="age" class="form-control" id="exampleFormControlInput1" placeholder="Enter Age">
+                        </div>
+                        <div class="form-group"></div>
+                        <label>Sex</label>
+                        <input type="radio" id="radio-1" name="gender" value="Male">
+                        <label for="radio-1">Male</label>
+                        <input type="radio" id="radio-2" name="gender" value="Female">
+                        <label for="radio-2">Female</label>
+                      </div>
+                      <div class="form-group">
+                          <label>Contact Number </label>
+                          <input type="text" name="contact_no" class="form-control" id="exampleFormControlInput1" placeholder="Enter Contact Number">
+                      </div>
+
+                      <div class="form-group">
+                          <label>Email</label>
+                          <input name="email" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Email">
+                        </div>
+  
+                            <button type="submit" class="btn btn-success mb-2">Update</button>
+                       
+                        </form>
+  
+  
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  
+  
+      <!-- End of Edit Student Modal -->
+
+
+
+
+      {% endfor %}
+  </tbody>
+
+</table>
+          </div>
+          <!-- Content ends here-->
+
+
+          <div class="col-sm-2"></div>
+
+      </div>
+  </div>
+
+<script>
+const navLinks = document.querySelectorAll('.nav-link');
+for (let i = 0; i < navLinks.length; i++) {
+navLinks[i].addEventListener('click', function() {
+for (let j = 0; j < navLinks.length; j++) {
+navLinks[j].classList.remove('active');
+}
+this.classList.add('active');
+});
+}
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="static/js/datatables-simple-demo.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+
+</body>
+</html>

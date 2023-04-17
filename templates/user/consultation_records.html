@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Barangay Health Center Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+<style>
+    body {
+      background-color: #a4e4bc;
+   }
+   .nav-link.active {
+    background-color: #97e3ed;
+    color: #86f0ef;
+  }
+  
+  .nav-link:hover {
+    background-color: #97e3ed;
+  }
+     .card-body{
+    width: 100%;
+} 
+.btn-warning, .btn-danger, .btn-success,.btn-info {
+    margin-right: 10px;
+    color:white;
+    margin-top: 10px;
+  }
+.unbold {
+    font-weight: normal;
+  }
+input[type="radio"] {
+  font-weight: normal;
+}
+label[for="radio-1"], label[for="radio-2"] {
+    font-weight: normal;
+  }
+
+               
+</style>
+
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-info">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="/home">User Side</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{{ url_for('Consultation') }}">
+      <div class="input-group">
+          <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+          <button class="btn btn-primary" name="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
+      </div>
+  </form>
+  
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <div class="container">
+            <div class="row">	
+                 <strong>{{session.name}} | <a href="{{ url_for('logout') }}" > Logout  </a> 
+            </strong>
+            </div>
+            </div>
+        </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+<div id="layoutSidenav">
+
+  <div id="layoutSidenav_nav">
+
+      <nav class="sb-sidenav accordion sb-sidenav-light " id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+              <div class="nav">
+                <div class="sb-sidenav-menu-heading">Home</div>
+                    <a class="nav-link " href="/home">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-home" style="font-size: 24px;"></i>
+                      </div>
+                      Home
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Records</div>
+                    <a class="nav-link " href="/Family">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-book-medical" style="font-size: 24px;"></i>
+                      </div>
+                      Family Record
+                    </a>
+                 
+                    <a class="nav-link active"  href="/Consultation">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-file-prescription" style="font-size: 24px;"></i>
+                      </div>
+                      Consultation Record
+                    </a>
+                    <a class="nav-link" href="Prenatal">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-female" style="font-size: 24px;"></i>
+                      </div>
+                      Prenatal Record
+                    </a>
+                    <a class="nav-link" href="/Newborn">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-baby" style="font-size: 24px;"></i>
+                      </div>
+                      Newborn Record
+                    </a>
+                    
+                    <a class="nav-link" href="/Prediction">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-heartbeat " style="font-size: 24px;"></i>
+                      </div>
+                      ISD Prediction Record
+                    </a>
+                 
+                  <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav">
+                          <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                          <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                      </nav>
+                  </div>
+                  
+                  <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                              Authentication
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                              <nav class="sb-sidenav-menu-nested nav">
+                                  <a class="nav-link" href="login.html">Login</a>
+                                  <a class="nav-link" href="register.html">Register</a>
+                                  <a class="nav-link" href="password.html">Forgot Password</a>
+                              </nav>
+                          </div>
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                              Error
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          
+                      </nav>
+                  </div>
+                  
+          </div>
+      </nav>
+      
+  </div>
+
+  <div id="layoutSidenav_content">
+    <main>
+     
+        <div class="container-fluid px-4">
+      
+            <h4 class="mt-4">Patients</h4>
+            <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Consultation Record</li>
+        </ol>
+        
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-12 my-auto">
+            {%with messages = get_flashed_messages()%}
+            {%if messages%}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close float-end" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            {%endwith%}
+            
+            <div class="card">
+              <div class="card-header">
+      <div class="card-body" style="overflow-x:auto;">
+
+        <table class="table table-bordered table-hover ">
+          <thead>
+            <tr>
+         
+              <th scope="col" class="text-center">Lastname</th>
+              <th scope="col" class="text-center">Firstname</th>
+              <th scope="col" class="text-center">Middlename</th>
+              <th scope="col" class="text-center">Blood Pressure</th>
+              <th scope="col" class="text-center">Pulse Rate</th>
+              <th scope="col" class="text-center">Weight</th>
+              <th scope="col" class="text-center">Height</th>
+              <th scope="col" class="text-center">Temperature</th>
+              <th scope="col" class="text-center">Allergies</th>
+              <th scope="col" class="text-center">Consultation</th>
+              <th scope="col" class="text-center">Date of Onset</th>
+              <th scope="col" class="text-center">Diagnosis</th>
+              <th scope="col" class="text-center">Medicine/Treatment</th>
+              <th scope="col" class="text-center">Treatment Date</th>
+              <th scope="col" class="text-center">Remarks</th>
+              <th scope="col" class="text-center">Consultant</th>
+              <th scope="col" class="text-center">Encoder</th>
+              <th scope="col" class="text-center">Date Encoded</th>
+              
+            
+              <th scope="col" class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in consultation_record %}
+              <tr>
+                
+                <td class="text-center">{{ row[2] }}</td>
+                <td class="text-center">{{ row[3] }}</td>
+                <td class="text-center">{{ row[4] }}</td>
+                <td class="text-center">{{ row[5] }}/{{ row[6] }}</td>
+                <td class="text-center">{{ row[7] }}</td>
+                <td class="text-center">{{ row[8] }}</td>
+                <td class="text-center">{{ row[9] }}</td>
+                <td class="text-center">{{ row[10] }}</td>
+                <td class="text-center">{{ row[11]}}</td>
+                <td class="text-center">{{ row[12]}}</td>
+                <td class="text-center">{{ row[19]}}</td>
+                <td class="text-center">{{ row[13]}}</td>
+                <td class="text-center">{{ row[14]}}</td>
+                <td class="text-center">{{ row[20]}}</td>
+                <td class="text-center">{{ row[17]}}</td>
+                <td class="text-center">{{ row[18]}}</td>
+                <td class="text-center">{{ row[16]}}</td>
+                <td class="text-center">{{ row[15]}}</td>
+
+           
+
+                <td>
+                  <div style="display: flex; gap: 5px;">
+                    <a href="/update_consultation/{{row[1]}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myConsultedit{{row[1]}}">Edit</a>
+                    <a href="/delete_consultation/{{row[1] }}" onclick="return confirm('Are You Sure You Want To Delete this Record?')" class="btn btn-danger btn-sm">Delete</a>
+
+                  </div>
+                </td>
+              </tr>
+      <!-- Enter New Patient Modal -->
+      <div id="myConsultedit{{row.1}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+              <div class="modal-content">
+     
+                  <div class="modal-header">
+                      <h5 class="modal-title text-primary" style="align-content: center;">Update Patient Details</h5>    
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    
+  
+                  <div class="modal-body">
+                      
+                      <form action="{{ url_for('update_consultation')}}" method="POST">
+                              <input type="hidden" name="patients_id" value="{{row.0}}">
+                              <input type="hidden" name="consultation_number" value="{{row.1}}">
+                              <input type="hidden" name="lastname" value="{{row.2}}">
+                              <input type="hidden" name="firstname" value="{{row.3}}">
+                              <input type="hidden" name="middlename" value="{{row.4}}">
+                              <div class="form-group">
+                                <label>Blood Pressure (Systolic)</label>
+                                <input value="{{row.5}}"type="text" name="systolic" class="form-control" id="exampleFormControlInput1" placeholder="Enter Systolic Blood Pressure">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Blood Pressure (Diastolic)</label>
+                                <input value="{{row.6}}"type="text" name="diastolic" class="form-control" id="exampleFormControlInput1" placeholder="Enter Diastolic Blood Pressure">
+                              </div> <br>
+                      
+                              <div class="form-group">
+                                <label>Pulse Rate</label>
+                                <input value="{{row.7}}" type="decimal" name="pulse_rate" class="form-control" id="exampleFormControlInput1" placeholder="Enter Pulse Rate">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Weight</label>
+                                <input value="{{row.8}}" type="decimal" name="weight" class="form-control" id="exampleFormControlInput1" placeholder="Enter Weight in kg">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Height</label>
+                                <input value="{{row.9}}" type="decimal" name="height" class="form-control" id="exampleFormControlInput1" placeholder="Enter Height in meters">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Temperature</label>
+                                <input value="{{row.10}}" type="decimal" name="temperature" class="form-control" id="exampleFormControlInput1" placeholder="Enter Temperature">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Allergies</label>
+                                <input value="{{row.11}}" type="text" name="allergies" class="form-control" id="exampleFormControlInput1" placeholder="Enter Allergies">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Consultation</label>
+                                <input value="{{row.12}}" type="text" name="consultation" class="form-control" id="exampleFormControlInput1" placeholder="Enter Consultation">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Date of Onset</label>
+                                <input value="{{row.19}}" type="date" name="onset_date" class="form-control" id="exampleFormControlInput1" placeholder="Enter Onset Date">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Diagnosis</label> 
+                                <input value="{{row.13}}" type="text" name="diagnosis" class="form-control" id="exampleFormControlInput1" placeholder="Enter Diagnosis">
+                                </div> <br>
+                              <div class="form-group">
+                                <label>Medicine/Treatment</label>
+                                <input value="{{row.14}}" type="text" name="medicine_treatment" class="form-control" id="exampleFormControlInput1" placeholder="Enter Medicine/Treatment">
+                              </div> <br>
+            
+                              <div class="form-group">
+                                <label>Remarks</label>
+                                <input value="{{row.17}}" type="text" name="remarks" class="form-control" id="exampleFormControlInput1" placeholder="Enter Remarks">
+                              </div> <br>
+                              <div class="form-group">
+                                <label>Consultant</label>
+                                <select name="consultant" class="form-control" id="exampleFormControlSelect1">
+                                  <option value="" selected disabled>Select Consultant</option>
+                                  <option value="Loresita A. Rebong (Nurse)"{% if row.18 == 'Loresita A. Rebong (Nurse)' %}selected{% else %}{% endif %}>Loresita A. Rebong (Nurse)</option>
+                                  <option value="Heidi B. Alcos (Midwife)"{% if row.18 == 'Heidi B. Alcos (Midwife)' %}selected{% else %}{% endif %}>Heidi B. Alcos (Midwife)</option>
+                                </select>
+                              </div> <br>     
+                              <div class="form-group">
+                                <label>Treatment Date</label>
+                                <input value="{{row.20}}" type="date" name="encoded_date" class="form-control" id="exampleFormControlInput1" placeholder="Enter Encoded Date">
+                              </div> <br>
+                                  
+                                  <div class="form-group"> <button type="submit" class="btn btn-success float-end mb-2">Update</button>
+                     
+                      </form>
+      
+  
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  
+  
+      <!-- End of Edit Patient Modal -->
+
+
+
+
+      {% endfor %}
+    </tbody>
+  </table>
+    <div class="pagination justify-content-center">
+      {{ pagination.links }}
+    </div>
+  
+  </div>
+    
+  <!-- Content ends here-->
+
+          <div class="col-sm-2"></div>
+
+      </div>
+  </div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script>
+const navLinks = document.querySelectorAll('.nav-link');
+for (let i = 0; i < navLinks.length; i++) {
+navLinks[i].addEventListener('click', function() {
+for (let j = 0; j < navLinks.length; j++) {
+navLinks[j].classList.remove('active');
+}
+this.classList.add('active');
+});
+}
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="static/js/datatables-simple-demo.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+
+</body>
+</html>

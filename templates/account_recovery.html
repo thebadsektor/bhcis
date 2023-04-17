@@ -1,0 +1,64 @@
+
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Account Recovery</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<style>
+form {
+  width: 500px;
+  height: 600px;
+  border: 2px solid white;
+  padding: 30px;
+  border-radius: 0px 100px;
+  background-color: white;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 70px;
+  right: 100px;
+}
+button {
+float: right;
+background: #555;
+padding: 10px 10px;
+color: rgb(43, 229, 36);
+border-radius: 5px;
+margin-right: 10px;
+border: none;
+width: 400px;
+}
+body {
+  background-image: url(/static/img/background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+</style>
+</head>
+<body>	
+<div class="container">
+	
+	<div class="container">
+   
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+  {% if message %}
+    <div class="alert alert-success">{{ message }}</div>
+  {% endif %}
+  <form method="POST">
+    <center> <h1>Account Recovery</h1> </center> <br> <br>
+    <div class="form-group">
+      <b> <label for="email">Email </label> </b>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"> <br> <br>
+    </div>
+    <button type="submit" class="btn btn-primary">Recover Account</button>
+  </form>
+	
+</form>
+</div>
+</body>
+</html>

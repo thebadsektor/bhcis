@@ -1,0 +1,31 @@
+<!-- Archive button -->
+<button class="btn btn-danger archive-btn" data-id="{{ patient.id }}" data-toggle="modal" data-target="#confirm-archive">Archive</button>
+
+<!-- Confirmation dialog -->
+<div class="modal fade" id="confirm-archive" tabindex="-1" role="dialog" aria-labelledby="confirm-archive-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirm-archive-label">Archive Patient Record</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to archive this patient record?</p>
+        <p><strong>Note:</strong> The patient's record will be removed from the active list and moved to the archive list. You can still view the archived records in the archive page.</p>
+        <div class="form-group">
+          <label for="immunization-completed">Has the patient completed their immunization?</label>
+          <select class="form-control" id="immunization-completed">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-archive-btn">Archive</button>
+      </div>
+    </div>
+  </div>
+</div>

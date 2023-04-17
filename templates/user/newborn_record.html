@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Barangay Health Center Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+<style>
+    body {
+      background-color: #a4e4bc;
+   }
+   .nav-link.active {
+    background-color: #97e3ed;
+    color: #86f0ef;
+  }
+  
+  .nav-link:hover {
+    background-color: #97e3ed;
+  }
+     .card-body{
+    width: 100%;
+} 
+.btn-warning, .btn-danger, .btn-success,.btn-info,.btn-secondary {
+    margin-right: 10px;
+    color:white;
+    margin-top: 10px;
+  }
+.unbold {
+    font-weight: normal;
+  }
+input[type="radio"] {
+  font-weight: normal;
+}
+label[for="radio-1"], label[for="radio-2"], label[for="radio-3"] {
+    font-weight: normal;
+  }
+.form-check-label{
+  font-weight: normal;
+}
+
+               
+</style>
+
+<body class="sb-nav-fixed">
+  <nav class="sb-topnav navbar navbar-expand navbar-dark bg-info">
+      <!-- Navbar Brand-->
+      <a class="navbar-brand ps-3" href="index.html">User Side</a>
+      <!-- Sidebar Toggle-->
+      <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+      <!-- Navbar Search-->
+      <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="GET" action="{{ url_for('Newborn') }}">
+        <div class="input-group">
+            <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+            <button class="btn btn-primary" name="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <div class="container">
+            <div class="row">	
+                 <strong>{{session.name}} | <a href="{{ url_for('logout') }}" > Logout  </a> 
+            </strong>
+            </div>
+            </div>
+        </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+
+  <div id="layoutSidenav_nav">
+
+      <nav class="sb-sidenav accordion sb-sidenav-light " id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+              <div class="nav">
+                <div class="sb-sidenav-menu-heading">Home</div>
+                    <a class="nav-link " href="/home">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-home" style="font-size: 24px;"></i>
+                      </div>
+                      Home
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Records</div>
+                    <a class="nav-link " href="/Family">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-book-medical" style="font-size: 24px;"></i>
+                      </div>
+                      Family Record
+                    </a>
+                   
+                   
+                    </a>
+                    <a class="nav-link"  href="/Consultation">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-file-prescription" style="font-size: 24px;"></i>
+                      </div>
+                      Consultation Record
+                    </a>
+                    <a class="nav-link" href="Prenatal">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-female" style="font-size: 24px;"></i>
+                      </div>
+                      Prenatal Record
+                    </a>
+                    <a class="nav-link active" href="/Newborn">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-baby" style="font-size: 24px;"></i>
+                      </div>
+                      Newborn Record
+                    </a>
+                
+                    <a class="nav-link" href="/Prediction">
+                      <div class="sb-nav-link-icon">
+                        <i class="fas fa-solid fa-heartbeat " style="font-size: 24px;"></i>
+                      </div>
+                      ISD Prediction Record
+                    </a>
+
+                 
+                  <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav">
+                          <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                          <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                      </nav>
+                  </div>
+                  
+                  <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                              Authentication
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                              <nav class="sb-sidenav-menu-nested nav">
+                                  <a class="nav-link" href="login.html">Login</a>
+                                  <a class="nav-link" href="register.html">Register</a>
+                                  <a class="nav-link" href="password.html">Forgot Password</a>
+                              </nav>
+                          </div>
+                          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                              Error
+                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                          </a>
+                          
+                      </nav>
+                  </div>
+                  
+          </div>
+      </nav>
+      
+  </div>
+
+  <div id="layoutSidenav_content">
+    <main>
+     
+        <div class="container-fluid px-4">
+      
+            <h4 class="mt-4">Newborn</h4>
+            <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Newborn Record</li>
+        </ol>
+        
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-12 my-auto">
+            {%with messages = get_flashed_messages()%}
+            {%if messages%}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close float-end" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            {%endwith%}
+            
+            <div class="card">
+              <div class="card-header">
+                  <h4>Newborn Record
+                      <button class="btn btn-primary float-end" data-toggle="modal" data-target="#myNewborn">Add Newborn Record</button></h2>
+                  </h4>
+              </div>
+
+              <!-- Enter New Patient Modal -->
+              <div id="myNewborn" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+  
+                          <div class="modal-header">
+                              <h5 class="modal-title text-primary" style="align-content: center;">Please Add Newborn Record</h5>    
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+           
+
+              <div class="modal-body">
+                  
+                  <form action="{{ url_for('insert_newborn')}}" method="POST">
+                      <div class="form-group">
+                        <label>Lastname</label>
+                        <input type="text" name="lastname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Lastname" pattern="[A-Za-z ]+" required>
+                      </div> <br>
+                          <div class="form-group">
+                              <label>Firstname</label>
+                              <input type="text" name="firstname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Firstname"pattern="[A-Za-z ]+"required>
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Middlename</label>
+                              <input type="text" name="middlename" class="form-control" id="exampleFormControlInput1" placeholder="Enter Middlename"pattern="[A-Za-z ]+"required>
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Suffix</label>
+                                <input type="text" name="suffix" class="form-control" id="exampleFormControlInput1" placeholder="Enter Suffix if available, n/a if not"pattern="[A-Za-z ]+"required>
+                              </div> <br>
+                            <div class="form-group">
+                              <label>Guardian's Name</label>
+                              <input type="text" name="gname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Guardian's name"pattern="[A-Za-z ]+"required>
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Address</label>
+                              <input type="text" name="address" class="form-control" id="exampleFormControlInput1" placeholder="Enter Complete Address"required>
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Birthdate</label>
+                              <input type="date" name="birthday" class="form-control" id="birthday" onchange="calculateAge()" placeholder="Enter Birthday"required>
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Age in Months</label>
+                              <input type="int" name="age" class="form-control" id="age" placeholder="Age will be auto-detected" readonly>
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Sex</label> <br>
+                               <input type="radio" id="radio-1" name="sex" value="Male"> 
+                              <label for="radio-1" >Male</label> <br>
+                              <input type="radio" id="radio-2" name="sex" value="Female">
+                              <label for="radio-2">Female</label> <br> <br>
+                              </div> 
+                              <div class="form-group">
+                                  <label>Guardian's Contact Number </label>
+                                  <input type="text" name="contact_no" class="form-control" id="exampleFormControlInput1" placeholder="Enter Contact Number"pattern="[0-9]{11}" required>
+                              </div> <br>
+
+                                <button type="submit" class="btn btn-primary mb-2 float-end">Save</button>
+                   
+                    </form>
+
+
+              </div>
+          </div>
+      </div>
+
+  </div>
+  
+
+<div class="card-body" style="overflow-x:auto;">
+  <!-- End of Enter New Patient Modal -->
+
+        <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">Newborn's ID</th>
+                <th scope="col"class="text-center">Lastname</th>
+                <th scope="col"class="text-center">Firstname</th>
+                <th scope="col"class="text-center">Middlename</th>
+                <th scope="col"class="text-center">Guardian's Name</th>
+                <th scope="col"class="text-center">Suffix</th>
+                <th scope="col"class="text-center">Address</th>
+                <th scope="col"class="text-center">Birthday</th>
+                <th scope="col"class="text-center">Age in Months</th>
+                <th scope="col"class="text-center">Sex</th>
+                <th scope="col"class="text-center">Guardian's Contact Number</th>
+                <th scope="col"class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% if message %}
+          <tr>
+            <td colspan="12" class="text-center">{{ message }}</td>
+          </tr>
+          {% else %}
+            {% for row in newborn_record %}
+            <tr>
+            <td class="text-center">{{row.0}}</td>
+            <td class="text-center">{{row.1}}</td>
+            <td class="text-center">{{row.2}}</td>
+            <td class="text-center">{{row.3}}</td>
+            <td class="text-center">{{row.5}}</td>
+            <td class="text-center">{{row.4}}</td>
+            <td class="text-center">{{row.6}}</td>
+            <td class="text-center">{{row.7}}</td>
+            <td class="text-center">{{row.8}}</td>
+            <td class="text-center">{{row.9}}</td>
+            <td class="text-center">{{row.10}}</td>
+            <td>
+                <div style="display: flex; gap: 5px;">
+                <a href="/insert_immunization/{{row.0}}"class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myImmunization{{row.0}}">Immunization</a>
+                <a href="/view_immunization/{{row.0}}" class="btn btn-secondary btn-sm">View </a>
+                <a href="/archive_newborn/{{row.0}}"class="btn btn-info btn-sm" data-toggle="modal" data-target="#myarchive{{row.0}}">Archive</a>                         
+                <a href="/update_newborn/{{row.0}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalEditNewborn{{row.0}}">Edit</a>
+                <a href="/delete_newborn/{{ row.0 }}" onclick="return confirm('Are You Sure You Want To Delete this Record?')" class="btn btn-danger btn-sm">Delete</a>
+
+                </div>
+            </td>
+        </tr>
+
+        
+          
+       
+          <!-- Enter New Consultation Modal -->
+<div id="myarchive{{row.0}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+          <div class="modal-header">
+              <h5 class="modal-title text-primary" style="align-content: center;">Please Enter ID to Archive</h5>    
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+
+<div class="modal-body">
+  <h1>Archive Records</h1>
+          {% if message %}
+          <p>{{ message }}</p>
+          {% endif %}
+          <form action="{{ url_for('archive_newborn')}}" method="POST">
+            <label for="id">Enter the ID of archived:</label>
+            <input type="text" id="id" name="id">
+            <input type="submit" >
+          </form>
+ 
+
+</div>
+</div>
+</div>
+</div>
+  <!-- End of Enter Consultation Modal -->
+        
+  <!-- Enter New Consultation Modal -->
+<div id="myImmunization{{row.0}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+          <div class="modal-header">
+              <h5 class="modal-title text-primary" style="align-content: center;">Please Add New Immunization</h5>    
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+
+<div class="modal-body">
+  
+  <form action="{{ url_for('insert_immunization')}}" method="POST">
+    <input type="hidden" name="id" value="{{row.0}}">
+    
+   
+            <div class="form-group">
+              <label>Weight (in pounds)</label>
+              <input type="decimal" name="weight" class="form-control" id="exampleFormControlInput1" placeholder="Enter Weight in pounds" pattern="\d+(\.\d+)?" required>
+            </div> <br>
+            <div class="form-group">
+              <label>Length (in centimeters)</label>
+              <input type="decimal" name="height" class="form-control" id="exampleFormControlInput1" placeholder="Enter Length in centimeters" pattern="\d+(\.\d+)?" required>
+            </div> <br>
+            <div class="form-group">
+              
+              <label>Immunization</label>
+              <select name="immunization" class="form-control" id="exampleFormControlSelect1">
+                <option value="" selected disabled>Select Immunization</option>
+                
+                <option value="BCG">BCG</option>
+                <option value="Hepatitis B">Hepatitis B</option>
+                <option value="Penta 1">Penta 1</option>
+                <option value="Penta 2">Penta 2</option>
+                <option value="Penta 3">Penta 3</option>
+                <option value="OPV 1">OPV 1</option>
+                <option value="OPV 2">OPV 2</option>
+                <option value="OPV 3">OPV 3</option>
+                <option value="IPV 1">IPV 1</option>
+                <option value="IPV 2">IPV 2</option>
+                <option value="PCV 1">PCV 1 </option>
+                <option value="PCV 2">PCV 2 </option>
+                <option value="PCV 3">PCV 3 </option>
+                <option value="MCV 1">MCV 1 </option>
+                <option value="MCV 2">MCV 2 </option>
+                <option value="Vitamin A Supplementation (6-11 months)">Vitamin A Supplementation (6-11 months) </option>
+                <option value="Vitamin A Supplementation (12-59 months[1])">Vitamin A Supplementation (12-59 months[1]) </option>
+                <option value="Vitamin A Supplementation (12-59 months[2])">Vitamin A Supplementation (12-59 months[2]) </option>
+               
+              </select>
+          </div> <br>
+          <div class="form-group">
+              
+            <label>Status</label>
+            <select name="status" class="form-control" id="exampleFormControlSelect1">
+              <option value="" selected disabled>Status (Vaccinated/Approved)</option>
+              
+              <option value="Vaccinated">Vaccinated</option>
+              <option value="Deferred">Deferred</option>
+              
+            </select>
+        </div> <br>
+        <div class="form-group">
+          <label> Reason of Deferral (if deffered)</label>
+          <input type="text" name="reason" class="form-control" id="exampleFormControlInput1" placeholder="Enter Reason of Deferral">
+        </div> <br>
+          <div class="form-group">
+            <label>Dose (in ml)</label>
+            <input type="decimal" name="dose" class="form-control" id="exampleFormControlInput1" placeholder="Enter Dose in ml">
+          </div> <br>
+          <div class="form-group">
+              <label>Route</label>
+              <select name="route" class="form-control" id="exampleFormControlSelect1">
+                <option value="" selected disabled>Select Route</option>
+                <option value="Oral">Oral</option>
+                <option value="Left Deltoid (Intradermal)">Left Deltoid (Intradermal)</option>
+                <option value="Left Deltoid (Intramuscular)">Left Deltoid (Intramuscular)</option>
+                <option value="Left Deltoid (Subcutaneous)">Left Deltoid (Subcutaneous)</option>
+                <option value="Right Deltoid (Intradermal)">Right Deltoid (Intradermal)</option>
+                <option value="Right Deltoid (Intramuscular)">Right Deltoid (Intramuscular)</option>
+                <option value="Right Deltoid (Subcutaneous)">Right Deltoid (Subcutaneous)</option>
+                <option value="Left Thigh (Intramuscular)">Left Thigh (Intramuscular)</option>
+                <option value="Right Thigh (Intramuscular)">Right Thigh (Intramuscular)</option>
+              </select>
+          </div> <br>
+          <div class="form-group">
+              
+            <label>Immunization Date</label>
+            <input type="date" name="encoded" class="form-control" id="exampleFormControlInput1" placeholder="Enter Immunization Date">
+        </div> <br>
+            <div class="form-group">
+              <label>Encoder</label>
+              <input type="text" value="{{ session['name'] }}" class="form-control" id="exampleFormControlInput1" readonly>
+            </div> <br>
+            <div class="form-group">
+              <label> Consultant</label>
+              <select name="consultant" class="form-control" id="exampleFormControlSelect1">
+                <option value="" selected disabled>Select Consultant</option>
+                <option value="Loresita Amoranto Rebong (Nurse)">Loresita A. Rebong (Nurse)</option>
+                <option value="Heidi Buera Alcos (Midwife)">Heidi B. Alcos (Midwife)</option>
+              </select>
+            </div> <br> 
+
+                <button type="submit" class="btn btn-warning mb-2 float-end">Save</button>
+   
+    </form>
+
+</div>
+</div>
+</div>
+</div>
+  <!-- End of Enter Consultation Modal -->
+
+      <!-- Enter Edit Patient Modal -->
+      <div id="modalEditNewborn{{row.0}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+              <div class="modal-content">
+     
+                  <div class="modal-header">
+                      <h5 class="modal-title text-primary" style="align-content: center;">Update Newborn Details</h5>    
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    
+  
+                  <div class="modal-body">
+                      
+                    <form action="{{ url_for('update_newborn')}}" method="POST">
+                            <input type="hidden" name="id" value="{{row.0}}">
+                            <div class="form-group">
+                                <label>Lastname</label>
+                                <input value="{{row.1}}" type="text" name="lastname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Lastname">
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Firstname</label>
+                                <input value="{{row.2}}" type="text" name="firstname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Firstname">
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Middlename</label>
+                                <input value="{{row.3}}" type="text" name="middlename" class="form-control" id="exampleFormControlInput1" placeholder="Enter Middlename">
+                            </div> <br>
+                            <div class="form-group">
+                              <label>Guardian's Name</label>
+                                <input value="{{row.5}}" type="text" name="gname" class="form-control" id="exampleFormControlInput1" placeholder="Enter Guardian's name">
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Suffix</label>
+                                <input value="{{row.4}}" type="text" name="suffix" class="form-control" id="exampleFormControlInput1" placeholder="Enter Suffix">
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input value="{{row.6}}" type="text" name="address" class="form-control" id="exampleFormControlInput1" placeholder="Enter Address">
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Birthdate</label>
+                                <input value="{{row.7}}" type="date" name="birthday" class="form-control" id="exampleFormControlInput1" placeholder="Enter Birthdate">
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Age in Months</label>
+                                <input value="{{row.8}}" type="int" name="age" class="form-control" id="exampleFormControlInput1" placeholder="Enter Age" readonly>
+                            </div> <br>
+                            <div class="form-group">
+                                <label>Sex</label> <br>
+                                <input value="Male" type="radio" id="radio-1" name="sex" {% if row.9 == "Male" %}checked{% endif %}>
+                                  <label for="radio-1">Male</label> <br>
+                                <input value="Female" type="radio" id="radio-2" name="sex" {% if row.9 == "Female" %}checked{% endif %}>
+                                  <label for="radio-2">Female</label> <br> <br>
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian's Contact Number</label>
+                                <input value="{{row.10}}" type="text" name="contact_no" class="form-control" id="exampleFormControlInput1" placeholder="Enter Contact number">
+                            </div> <br>
+                                  
+                                  <div class="form-group"> <button type="submit" class="btn btn-success float-end mb-2">Update</button>
+                     
+                      </form>
+  
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  
+  
+      <!-- End of Edit Patient Modal -->
+ 
+
+      {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+    <div class="pagination justify-content-center">
+      {{ pagination.links }}
+    </div>
+  
+  </div>
+          <!-- Content ends here-->
+
+
+          <div class="col-sm-2"></div>
+
+      </div>
+  </div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+
+
+<script>
+const navLinks = document.querySelectorAll('.nav-link');
+for (let i = 0; i < navLinks.length; i++) {
+navLinks[i].addEventListener('click', function() {
+for (let j = 0; j < navLinks.length; j++) {
+navLinks[j].classList.remove('active');
+}
+this.classList.add('active');
+});
+}
+</script>
+
+<script>
+  function calculateAge() {
+    var birthday = new Date(document.getElementById("birthday").value);
+    var currentDate = new Date();
+    var ageInMonths = (currentDate.getFullYear() - birthday.getFullYear()) * 12 + (currentDate.getMonth() - birthday.getMonth());
+    document.getElementById("age").value = ageInMonths;
+  }
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="static/js/datatables-simple-demo.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+
+</body>
+</html>
