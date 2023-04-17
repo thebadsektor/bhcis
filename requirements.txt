@@ -31,7 +31,7 @@ multidict==6.0.2
 mysql==0.0.3
 mysql-connector==2.2.9
 mysql-connector-python==8.0.32
-numpy==1.23.0
+numpy==1.21.0
 pandas==1.5.3
 pipenv==2022.5.2
 scikit-learn==1.2.2
