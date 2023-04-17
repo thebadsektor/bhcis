@@ -20,7 +20,8 @@ from sklearn.model_selection import train_test_split
 import secrets
 import uuid
 import MySQLdb
-
+import logging
+from logging.handlers import RotatingFileHandler
 
   
 app = Flask(__name__)
@@ -43,6 +44,12 @@ app.config['MYSQL_DATABASE_DB'] = 'heroku_595c13ac8015330'
 app.config['MYSQL_CONNECT_TIMEOUT'] = 300
 mysql.init_app(app) 
 
+
+# Configure logging
+handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+app.logger.addHandler(handler)
+
 @app.route('/dbstatus')
 def dbstatus():
     try:
@@ -50,6 +57,7 @@ def dbstatus():
         cursor.execute("SELECT DATABASE();")
         result = cursor.fetchone()
         return "Database connection established. Connected to database: " + result[0]
+        app.logger.info('This is an info log message')
     except Exception as e:
         return "Error connecting to database: " + str(e)
     
