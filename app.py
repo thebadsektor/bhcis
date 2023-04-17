@@ -37,10 +37,10 @@ app.secret_key = 'xyzsdfg'
 mysql = MySQL()
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-06.cleardb.net'
-app.config['MYSQL_DATABASE_USER'] = 'bf7577b3f3a6df'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'e8d7e398'
-app.config['MYSQL_DATABASE_DB'] = 'heroku_595c13ac8015330'
+app.config['MYSQL_HOST'] = 'us-cdbr-east-06.cleardb.net'
+app.config['MYSQL_USER'] = 'bf7577b3f3a6df'
+app.config['MYSQL_PASSWORD'] = 'e8d7e398'
+app.config['MYSQL_DB'] = 'heroku_595c13ac8015330'
 app.config['MYSQL_CONNECT_TIMEOUT'] = 300
 mysql.init_app(app) 
 
