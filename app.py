@@ -36,12 +36,23 @@ app.config['MYSQL_DB'] = 'heroku_595c13ac8015330'
 mysql = MySQL(app)
 
 # MySQL configurations
+app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-06.cleardb.net'
 app.config['MYSQL_DATABASE_USER'] = 'bf7577b3f3a6df'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'e8d7e398'
 app.config['MYSQL_DATABASE_DB'] = 'heroku_595c13ac8015330'
-app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-06.cleardb.net'
-mysql.init_app(app)
-  
+app.config['MYSQL_CONNECT_TIMEOUT'] = 300
+mysql.init_app(app) 
+
+@app.route('/dbstatus')
+def dbstatus():
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT DATABASE();")
+        result = cursor.fetchone()
+        return "Database connection established. Connected to database: " + result[0]
+    except Exception as e:
+        return "Error connecting to database: " + str(e)
+    
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -77,7 +88,6 @@ def login():
             flash(error, 'danger')
 
     return render_template('login.html', error=error, message=message)
-
 
   
 @app.route('/logout')
