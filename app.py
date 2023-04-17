@@ -34,6 +34,13 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'db_bhcms_final'
   
 mysql = MySQL(app)
+
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'bf7577b3f3a6df'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'e8d7e398'
+app.config['MYSQL_DATABASE_DB'] = 'heroku_595c13ac8015330'
+app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-06.cleardb.net'
+mysql.init_app(app)
   
 @app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
