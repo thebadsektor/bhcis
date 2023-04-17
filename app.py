@@ -63,31 +63,39 @@ def login():
         email = request.form['email']
         password = request.form['password']
       
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM user WHERE email = %s AND password = %s', (email, password,))
-        user = cursor.fetchone()
+        try:
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            print('Connection to the database established successfully.')
+            cursor.execute('SELECT * FROM user WHERE email = %s AND password = %s', (email, password,))
+            user = cursor.fetchone()
 
-        if user:
-            session['loggedin'] = True
-            session['userid'] = user['userid']
-            session['name'] = user['name']
-            session['email'] = user['email']
+            if user:
+                session['loggedin'] = True
+                session['userid'] = user['userid']
+                session['name'] = user['name']
+                session['email'] = user['email']
            
-            message = 'You have successfully logged in!'
+                message = 'You have successfully logged in!'
             
-            # check if user is admin and log them in
-            if user['email'] == 'admin@gmail.com' and user['password'] == 'admin123':
-                session['is_admin'] = True
-                return redirect(url_for('dashboard'))
+                # check if user is admin and log them in
+                if user['email'] == 'admin@gmail.com' and user['password'] == 'admin123':
+                    session['is_admin'] = True
+                    return redirect(url_for('dashboard'))
             
-            else:
-                return redirect(url_for('home'))
+                else:
+                    return redirect(url_for('home'))
         
-        else:
-            error = 'Invalid email or password. Please try again.'
-            flash(error, 'danger')
+            else:
+                error = 'Invalid email or password. Please try again.'
+                flash(error, 'danger')
 
+        except Exception as e:
+            print(f'Error executing query: {e}')
+            error = 'An error occurred while logging you in. Please try again later.'
+            flash(error, 'danger')
+            
     return render_template('login.html', error=error, message=message)
+
 
   
 @app.route('/logout')
