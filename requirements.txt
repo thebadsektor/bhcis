@@ -37,5 +37,5 @@ threadpoolctl==3.1.0
 tqdm==4.62.3
 urllib3==1.26.7
 Werkzeug>=2.2.2
-widgetsnbextension==3.5.1
+widgetsnbextension~=4.0.7
 zipp==3.6.0
